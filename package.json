@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start:dev": "nodemon ./bin/www --inspect",
+    "start:mq": "docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.12-management"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.507.0",
+    "@aws-sdk/client-sts": "^3.507.0",
+    "@aws-sdk/credential-provider-node": "^3.507.0",
+    "@aws-sdk/s3-request-presigner": "^3.507.0",
+    "amqplib": "^0.10.3",
+    "bcrypt": "^5.1.1",
+    "cls-hooked": "^4.2.2",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.4.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.36.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "sequelize-cli": "^6.6.2"
+  }
+}
