@@ -1,0 +1,52 @@
+name: smp-backend
+version: "3.7"
+
+services:
+  server:
+    image: smp-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # ports:
+    #   - "8000:8000"
+    depends_on:
+      - migration
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - app-network
+    volumes:
+      - ./public:/project/public
+  
+  migration:
+    image: smp-migration
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: >
+      sh -c "npx sequelize-cli db:create && npx sequelize-cli db:migrate"
+    env_file:
+      - .env
+    networks:
+      - app-network
+  
+  proxy:
+    image: nginx:latest
+    container_name: proxy
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./.scripts:/etc/nginx
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  public:
